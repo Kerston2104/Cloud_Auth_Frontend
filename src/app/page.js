@@ -1,103 +1,141 @@
+'use client'
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { UserPlus, Lock, ArrowRight } from "lucide-react"; // Importing icons from lucide-react
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <main className="min-h-screen bg-gradient-to-br from-gray-100 to-white text-gray-800">
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Navigation Bar */}
+      <header className="bg-white shadow-md py-4 fixed w-full top-0 left-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+          <div className="text-2xl font-semibold text-gray-800">
+            <Link href="/">
+              <h2 className="text-2xl font-semibold">CloudAuth</h2>
+            </Link>
+          </div>
+          <div className="flex gap-6">
+            <Link href="/signup">
+              <Button className="px-6 py-2 text-lg rounded-2xl shadow-md">Sign Up</Button>
+            </Link>
+            <Link href="/signin">
+              <Button variant="outline" className="px-6 py-2 text-lg rounded-2xl border-2">Login</Button>
+            </Link>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+      </header>
+
+      {/* Main Content */}
+      <section className="max-w-7xl mx-auto px-4 py-32 grid md:grid-cols-2 gap-10 items-center mt-24">
+        <div>
+          <h1 className="text-5xl font-bold mb-6 leading-tight">
+           Cloud-Based User Authentication with Django Rest API
+          </h1>
+          <p className="text-xl mb-6">
+          Built and deployed a basic authentication system on the cloud using Django REST Framework.
+           The system allows users to register, log in, and log out using token-based authentication. 
+           Implemented input validation and handled common user errors, laying the groundwork for more 
+           advanced security features in future versions.
+          </p>
+
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold mb-4">Key Features:</h3>
+            <ul className="list-disc list-inside text-lg text-gray-700">
+              <li>⚡ Fast User Authentication</li>
+              <li>📊 Real-Time Analytics and Reporting</li>
+              <li>🔒 Built with Django RestAPI</li>
+            </ul>
+          </div>
+
+          <div className="flex gap-6">
+            <Link href="/signup">
+              <Button className="px-6 py-3 text-lg rounded-2xl shadow-lg">Get Started Free</Button>
+            </Link>
+          </div>
+        </div>
+
+        <div className="flex justify-center items-center">
           <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+            src="/cloudimage.jpg"
+            alt="Cloud Auth Illustration"
+            width={500}
+            height={500}
+            className="rounded-xl shadow-xl"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        </div>
+      </section>
+
+      {/* Glassmorphism Effect Section */}
+      <section className="relative bg-gradient-to-br from-teal-400 to-blue-600 p-16 mb-16 rounded-xl backdrop-blur-md bg-opacity-30">
+        <div className="max-w-5xl mx-auto text-center text-white">
+          <h2 className="text-4xl font-semibold mb-4">Join Us Today!</h2>
+          <p className="text-lg mb-6">
+            Get started with our secure authentication platform and elevate the security of your applications effortlessly.
+            Start integrating with our easy-to-use APIs and enjoy powerful features designed to enhance user experience.
+          </p>
+
+          <div className="flex justify-center gap-6">
+            <Link href="/signup">
+              <Button className="px-6 py-3 text-lg rounded-2xl bg-white hover:bg-slate-200 text-gray-800">Sign Up Now</Button>
+            </Link>
+            <Link href="/login">
+              <Button variant="outline" className="px-6 py-3 text-lg text-black rounded-2xl border-white">Login</Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="bg-white py-16 border-t">
+            <div className="max-w-5xl mx-auto px-6 text-center">
+                <h2 className="text-4xl font-semibold mb-6">
+                    Why Choose CloudAuth for Your Application?
+                </h2>
+                <p className="text-lg text-gray-600 mb-8">
+                    CloudAuth provides top-notch security and seamless onboarding, all backed by Django. Our solution reduces development time while boosting user conversion rates. Here’s why it's the best choice for your app:
+                </p>
+                <div className="grid md:grid-cols-3 gap-8 text-left">
+                    <div>
+                        <h3 className="text-xl font-bold mb-2">🚀 Integrated using React</h3>
+                        <p className="text-gray-600">
+                            Easily integrate Backend with the frontend Using React Next.js Framework to test our Cloud Based Authentication Project
+                        </p>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-bold mb-2">⚡ Lightning Fast</h3>
+                        <p className="text-gray-600">
+                            Our Django Authentication system us speed, authentication requests are handled in milliseconds.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-bold mb-2">🧩 Customized UI of Nextjs</h3>
+                        <p className="text-gray-600">
+                            Customize every aspect of the authentication flow, including login forms, user registration, and email templates.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-bold mb-2">🛡️ Route Protection</h3>
+                        <p className="text-gray-600">
+                            Prevents unauthorized access through URL manipulation using secure route protection mechanisms.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-bold mb-2">✅ Input Validation</h3>
+                        <p className="text-gray-600">
+                            Includes built-in input validation and basic error handling to ensure only clean and valid data is processed.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-bold mb-2">🎉 Toasty Notifications</h3>
+                        <p className="text-gray-600">
+                            Integrated Toasty for real-time feedback and alerts, improving the user experience and interactivity of your app.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
   );
 }
