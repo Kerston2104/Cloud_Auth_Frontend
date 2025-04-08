@@ -1,53 +1,40 @@
-'use client'
+'use client';
 
-import React, { useEffect, useState } from "react";
-import Sidebar from "../_components/Sidebar"; // Adjust the import path according to your file structure
-import ProtectedRoute from "../_components/protectedRoute";
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import Sidebar from '../_components/Sidebar';
+import ProtectedRoute from '../_components/protectedRoute';
 
-const Dashboard = () => {
-  const [userCount, setUserCount] = useState(0);
-  const [isOpen, setIsOpen] = useState(true);  // State to toggle sidebar visibility
+export default function DashboardPage() {
+  const [blogs, setBlogs] = useState([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/user")
-      .then((response) => response.json())
-      .then((data) => setUserCount(data["Users List"]?.length))  // Count users
-      .catch((error) => console.error("Error fetching users:", error));
+    fetch('http://localhost:8000/api/blogs/')
+      .then(res => res.json())
+      .then(data => setBlogs(data.blogs));
   }, []);
 
   return (
     <ProtectedRoute>
-    <div className="flex h-screen bg-gray-100">
-      {/* Sidebar Component */}
-      <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
-      
-      {/* Main Content */}
-      <div className={`transition-all duration-300 flex-1 p-10 ${isOpen ? 'ml-64' : 'ml-20'}`}>
-        <h2 className="text-3xl font-semibold mb-6">Welcome to Dashboard</h2>
+      <div className="flex min-h-screen bg-gradient-to-tr from-amber-900 via-black to-amber-800 text-amber-100">
+        <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+        <div className={`transition-all duration-300 p-6 w-full ${isSidebarOpen ? 'ml-64' : 'ml-20'}`}>
+          <h1 className="text-4xl font-bold text-white mb-8">Other's and Recent News</h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Card for Total Users */}
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h3 className="text-xl font-medium mb-2">Total Users</h3>
-            <p className="text-3xl font-semibold">{userCount}</p>
-          </div>
-
-          {/* Card for Revenue */}
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h3 className="text-xl font-medium mb-2">Revenue</h3>
-            <p className="text-3xl font-semibold">$25,000</p>
-          </div>
-
-          {/* Card for Active Sessions */}
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h3 className="text-xl font-medium mb-2">Active Sessions</h3>
-            <p className="text-3xl font-semibold">500</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {blogs.map(blog => (
+              <div
+                key={blog.id}
+                className="bg-amber-800 border border-amber-700 rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-6 cursor-pointer"
+              >
+                <h2 className="text-xl font-semibold text-indigo-400 mb-2">{blog.title}</h2>
+                <p className="text-amber-300 text-sm line-clamp-4">{blog.content}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
-    </div>
     </ProtectedRoute>
   );
-};
-
-export default Dashboard;
+}

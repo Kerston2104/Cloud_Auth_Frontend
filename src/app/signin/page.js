@@ -7,6 +7,7 @@ import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const SignIn = () => {
   const [username, setUsername] = useState("");
@@ -16,89 +17,99 @@ const SignIn = () => {
   const eventhandler = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.get("http://localhost:8000/api/user");
-      const users = response.data["Users List"];
+      const response = await axios.post("http://localhost:8000/api/user/", {
+        username,
+        password,
+      });
 
-      const validUser = users.find(
-        (user) => user.username === username && user.password === password
-      );
+      const user = response.data.user;
 
-      if (validUser) {
-        localStorage.setItem("username", validUser.username);
+      if (user) {
+        localStorage.setItem("username", user.username);
         localStorage.setItem("isLoggedIn", "true");
-        toast.success("Login successful! Redirecting...", {
+        toast.success(response.data.message, {
           position: "top-center",
           autoClose: 2000,
         });
         setTimeout(() => router.push("/dashboard"), 2000);
       } else {
-        toast.error("Invalid username or password!", {
+        toast.error("Login failed!", {
           position: "top-center",
           autoClose: 3000,
         });
       }
     } catch (error) {
-      console.error("Error fetching users:", error);
-      toast.error("Server error. Try again later.", {
-        position: "top-center",
-        autoClose: 3000,
-      });
+      toast.error(
+        error.response?.data?.error || "Server error. Try again later.",
+        {
+          position: "top-center",
+          autoClose: 3000,
+        }
+      );
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-indigo-500">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+    <main className="min-h-screen bg-gradient-to-tr from-amber-900 via-black to-amber-800 text-amber-100 font-sans flex items-center justify-center px-4">
+      <div className="backdrop-blur-md bg-black/50 border border-amber-700 rounded-2xl shadow-2xl p-8 w-full max-w-md">
         <form onSubmit={eventhandler}>
-          <h3 className="text-2xl font-semibold text-center mb-6">Sign In</h3>
-          <div className="flex justify-center mb-4">
+          <h2 className="text-3xl font-bold text-center mb-6 text-white">Welcome Back</h2>
+
+          <div className="flex justify-center mb-6">
             <Image
               src="/loginimg.jpg"
-              alt="login img"
-              width={100}
-              height={100}
-              className="rounded-full"
+              alt="Login"
+              width={80}
+              height={80}
+              className="rounded-full border border-amber-500"
             />
           </div>
+
           <div className="mb-4">
-            <label htmlFor="username" className="block text-lg font-medium">Username</label>
+            <label htmlFor="username" className="block text-sm font-medium text-amber-300 mb-1">
+              Username
+            </label>
             <input
               type="text"
               id="username"
-              placeholder="Enter username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 rounded-lg bg-amber-800 border border-amber-600 text-amber-100 placeholder-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              placeholder="Your username"
               required
             />
           </div>
+
           <div className="mb-6">
-            <label htmlFor="password" className="block text-lg font-medium">Password</label>
+            <label htmlFor="password" className="block text-sm font-medium text-amber-300 mb-1">
+              Password
+            </label>
             <input
               type="password"
               id="password"
-              placeholder="Enter password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 rounded-lg bg-amber-800 border border-amber-600 text-amber-100 placeholder-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              placeholder="••••••••"
               required
             />
           </div>
-          <div className="mb-6">
-            <button type="submit" className="w-full p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none">
-              Sign In
-            </button>
-          </div>
-          <p className="text-center text-gray-600">
-            Don't have an account?{" "}
-            <Link href="/signup" className="text-blue-500 hover:text-blue-700">
+
+          <Button type="submit" className="w-full rounded-full px-6 py-3 text-lg bg-amber-600 hover:bg-amber-500 text-white shadow-md">
+            Sign In
+          </Button>
+
+          <p className="mt-6 text-center text-amber-400 text-sm">
+            Don&apos;t have an account?{" "}
+            <Link href="/signup" className="text-white hover:text-red-300 font-medium">
               Sign Up
             </Link>
           </p>
         </form>
+
+        <ToastContainer />
       </div>
-      <ToastContainer />
-    </div>
+    </main>
   );
 };
 

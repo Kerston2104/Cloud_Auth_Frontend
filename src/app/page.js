@@ -1,141 +1,151 @@
-'use client'
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { UserPlus, Lock, ArrowRight } from "lucide-react"; // Importing icons from lucide-react
+'use client';
+
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export default function Home() {
-  return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-100 to-white text-gray-800">
+  const [blogs, setBlogs] = useState([]);
 
-      {/* Navigation Bar */}
-      <header className="bg-white shadow-md py-4 fixed w-full top-0 left-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <div className="text-2xl font-semibold text-gray-800">
-            <Link href="/">
-              <h2 className="text-2xl font-semibold">CloudAuth</h2>
-            </Link>
-          </div>
-          <div className="flex gap-6">
+  useEffect(() => {
+    fetch('http://localhost:8000/api/blogs/')
+      .then(res => res.json())
+      .then(data => setBlogs(data.blogs));
+  }, []);
+
+  return (
+    <main className="min-h-screen bg-gradient-to-tr from-amber-900 via-black to-amber-800 text-amber-100 font-sans">
+      
+      {/* Navbar */}
+      <header className="fixed top-0 left-0 w-full backdrop-blur-md bg-black/60 shadow-md z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+          <Link href="/" className="text-3xl font-bold tracking-tight text-white">
+            CloudAuth
+          </Link>
+          <div className="flex gap-4">
             <Link href="/signup">
-              <Button className="px-6 py-2 text-lg rounded-2xl shadow-md">Sign Up</Button>
+              <Button className="rounded-full px-5 py-2 text-base bg-amber-600 hover:bg-amber-500 text-white">Sign Up</Button>
             </Link>
             <Link href="/signin">
-              <Button variant="outline" className="px-6 py-2 text-lg rounded-2xl border-2">Login</Button>
+              <Button variant="outline" className="rounded-full px-5 py-2 text-base border-amber-400 text-amber-300 hover:border-white">Login</Button>
             </Link>
           </div>
         </div>
       </header>
 
-      {/* Main Content */}
-      <section className="max-w-7xl mx-auto px-4 py-32 grid md:grid-cols-2 gap-10 items-center mt-24">
-        <div>
-          <h1 className="text-5xl font-bold mb-6 leading-tight">
-           Cloud-Based User Authentication with Django Rest API
-          </h1>
-          <p className="text-xl mb-6">
-          Built and deployed a basic authentication system on the cloud using Django REST Framework.
-           The system allows users to register, log in, and log out using token-based authentication. 
-           Implemented input validation and handled common user errors, laying the groundwork for more 
-           advanced security features in future versions.
-          </p>
-
-          <div className="mb-8">
-            <h3 className="text-2xl font-semibold mb-4">Key Features:</h3>
-            <ul className="list-disc list-inside text-lg text-gray-700">
-              <li>⚡ Fast User Authentication</li>
-              <li>📊 Real-Time Analytics and Reporting</li>
-              <li>🔒 Built with Django RestAPI</li>
-            </ul>
-          </div>
-
-          <div className="flex gap-6">
+      {/* Hero */}
+      <section className="w-full pt-36 pb-20 px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6 text-white">
+              Cloud-Based User Authentication with Django Rest API
+            </h1>
+            <p className="text-lg mb-6 text-amber-300">
+              Built and deployed a basic authentication system on the cloud using Django REST Framework...
+            </p>
+            <div className="mb-8">
+              <h3 className="text-2xl font-semibold mb-3 text-white">Key Features:</h3>
+              <ul className="space-y-2 text-base text-amber-300 pl-5 list-disc">
+                <li>⚡ Fast User Authentication</li>
+                <li>📊 Real-Time Analytics and Reporting</li>
+                <li>🔒 Built with Django RestAPI</li>
+              </ul>
+            </div>
             <Link href="/signup">
-              <Button className="px-6 py-3 text-lg rounded-2xl shadow-lg">Get Started Free</Button>
+              <Button className="rounded-full px-6 py-3 text-lg bg-amber-600 hover:bg-amber-500 text-white shadow-md">
+                Get Started Free
+              </Button>
             </Link>
           </div>
-        </div>
 
-        <div className="flex justify-center items-center">
-          <Image
-            src="/cloudimage.jpg"
-            alt="Cloud Auth Illustration"
-            width={500}
-            height={500}
-            className="rounded-xl shadow-xl"
-          />
+          <div className="relative w-full h-[400px] md:h-[480px] flex justify-center items-center">
+            <Image alt='Our cloud Image display here' className='rounded-xl' src={'/cloudimage.jpg'} width={500} height={500}/>
+          </div>
         </div>
       </section>
 
-      {/* Glassmorphism Effect Section */}
-      <section className="relative bg-gradient-to-br from-teal-400 to-blue-600 p-16 mb-16 rounded-xl backdrop-blur-md bg-opacity-30">
-        <div className="max-w-5xl mx-auto text-center text-white">
+      {/* CTA */}
+      <section className="relative bg-gradient-to-br from-amber-700 to-amber-900 py-20 text-white">
+        <div className="max-w-5xl mx-auto text-center px-6">
           <h2 className="text-4xl font-semibold mb-4">Join Us Today!</h2>
-          <p className="text-lg mb-6">
-            Get started with our secure authentication platform and elevate the security of your applications effortlessly.
-            Start integrating with our easy-to-use APIs and enjoy powerful features designed to enhance user experience.
+          <p className="text-lg mb-8 text-amber-200">
+            Get started with our secure authentication platform...
           </p>
-
-          <div className="flex justify-center gap-6">
+          <div className="flex justify-center gap-6 flex-wrap">
             <Link href="/signup">
-              <Button className="px-6 py-3 text-lg rounded-2xl bg-white hover:bg-slate-200 text-gray-800">Sign Up Now</Button>
+              <Button className="rounded-full px-6 py-3 text-lg bg-white text-amber-800 hover:bg-amber-200">
+                Sign Up Now
+              </Button>
             </Link>
             <Link href="/login">
-              <Button variant="outline" className="px-6 py-3 text-lg text-black rounded-2xl border-white">Login</Button>
+              <Button variant="outline" className="rounded-full px-6 py-3 text-lg text-white border-white hover:bg-white hover:text-amber-700">
+                Login
+              </Button>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Benefits Section */}
-      <section className="bg-white py-16 border-t">
-            <div className="max-w-5xl mx-auto px-6 text-center">
-                <h2 className="text-4xl font-semibold mb-6">
-                    Why Choose CloudAuth for Your Application?
-                </h2>
-                <p className="text-lg text-gray-600 mb-8">
-                    CloudAuth provides top-notch security and seamless onboarding, all backed by Django. Our solution reduces development time while boosting user conversion rates. Here’s why it's the best choice for your app:
-                </p>
-                <div className="grid md:grid-cols-3 gap-8 text-left">
-                    <div>
-                        <h3 className="text-xl font-bold mb-2">🚀 Integrated using React</h3>
-                        <p className="text-gray-600">
-                            Easily integrate Backend with the frontend Using React Next.js Framework to test our Cloud Based Authentication Project
-                        </p>
-                    </div>
-                    <div>
-                        <h3 className="text-xl font-bold mb-2">⚡ Lightning Fast</h3>
-                        <p className="text-gray-600">
-                            Our Django Authentication system us speed, authentication requests are handled in milliseconds.
-                        </p>
-                    </div>
-                    <div>
-                        <h3 className="text-xl font-bold mb-2">🧩 Customized UI of Nextjs</h3>
-                        <p className="text-gray-600">
-                            Customize every aspect of the authentication flow, including login forms, user registration, and email templates.
-                        </p>
-                    </div>
-                    <div>
-                        <h3 className="text-xl font-bold mb-2">🛡️ Route Protection</h3>
-                        <p className="text-gray-600">
-                            Prevents unauthorized access through URL manipulation using secure route protection mechanisms.
-                        </p>
-                    </div>
-                    <div>
-                        <h3 className="text-xl font-bold mb-2">✅ Input Validation</h3>
-                        <p className="text-gray-600">
-                            Includes built-in input validation and basic error handling to ensure only clean and valid data is processed.
-                        </p>
-                    </div>
-                    <div>
-                        <h3 className="text-xl font-bold mb-2">🎉 Toasty Notifications</h3>
-                        <p className="text-gray-600">
-                            Integrated Toasty for real-time feedback and alerts, improving the user experience and interactivity of your app.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
+      {/* Benefits */}
+      <section className="bg-amber-900 py-20 border-t border-amber-700">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4 text-white">Why Choose CloudAuth?</h2>
+            <p className="text-amber-300 text-lg">
+              CloudAuth provides top-notch security...
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                title: "🚀 Integrated using React",
+                desc: "Easily integrate Backend with the frontend Using React Next.js Framework"
+              },
+              {
+                title: "⚡ Lightning Fast",
+                desc: "Our Django Authentication system is fast..."
+              },
+              {
+                title: "🧩 Customized UI",
+                desc: "Customize every aspect of the authentication flow..."
+              },
+              {
+                title: "🛡️ Route Protection",
+                desc: "Prevents unauthorized access through secure route protection."
+              },
+              {
+                title: "✅ Input Validation",
+                desc: "Includes built-in input validation and error handling."
+              },
+              {
+                title: "🎉 Toasty Notifications",
+                desc: "Real-time feedback via toast messages."
+              }
+            ].map((item, index) => (
+              <div key={index} className="bg-amber-800 p-6 rounded-xl shadow-md hover:shadow-lg transition border border-amber-700">
+                <h3 className="text-xl font-semibold mb-2 text-white">{item.title}</h3>
+                <p className="text-amber-400">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 💬 Blog Section */}
+      <section className="bg-amber-950 py-20 border-t border-amber-800">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-white mb-8">📚 Personalized News</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {blogs.map(blog => (
+              <div key={blog.id} className="bg-amber-800 rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-5 cursor-pointer border border-amber-700">
+                <h2 className="text-xl font-semibold text-amber-400 mb-2">{blog.title}</h2>
+                <p className="text-amber-300 text-sm line-clamp-4">{blog.content}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

@@ -19,10 +19,9 @@ const ProtectedRoute = ({ children }) => {
         autoClose: 2000,
       });
 
-      // Delay navigation to allow toast to show
       setTimeout(() => {
         router.push("/");
-      }, 1000); // Delay for 1 second
+      }, 1000); 
     }
   }, [router]);
 
